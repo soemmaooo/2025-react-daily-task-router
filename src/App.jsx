@@ -2,9 +2,11 @@ import './App.css';
 import {
   HashRouter,
   NavLink,
+  Outlet,
   Route,
   Routes,
   useNavigate,
+  useParams,
 } from 'react-router-dom';
 
 const Home = () => {
@@ -32,6 +34,24 @@ const Logout = () => {
     </button>
   );
 };
+const Post = () => {
+  return (
+    <>
+      <NavLink to="/post/post123">
+        <p>Post 詳細頁面</p>
+      </NavLink>
+      <Outlet />
+    </>
+  );
+};
+const PostDetail = () => {
+  const params = useParams();
+  return (
+    <>
+      <p>Post ID:{params.postId}</p>
+    </>
+  );
+};
 
 function App() {
   return (
@@ -50,6 +70,9 @@ function App() {
           <NavLink to="/todo">
             <p>Todo 頁面</p>
           </NavLink>
+          <NavLink to="/post">
+            <p>Post 頁面</p>
+          </NavLink>
         </div>
         {/* Routes, Route 練習區 */}
         {/* 練習區 */}
@@ -58,6 +81,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/todo" element={<Todo />} />
+          <Route path="/post" element={<Post />}>
+            <Route path=":postId" element={<PostDetail />} />
+          </Route>
         </Routes>
       </HashRouter>
     </div>
